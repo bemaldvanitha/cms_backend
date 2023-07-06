@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/customers")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CustomerController {
     private final CustomerService customerService;
     private final CityService cityService;
@@ -32,7 +33,6 @@ public class CustomerController {
         this.familyMemberService = familyMemberService;
     }
 
-    // correct
     @PostMapping
     public ResponseEntity<User> createCustomer(@RequestBody User user) {
         Customer customer = new Customer(user.getName(), user.getDateOfBirth(), user.getNicNumber());
@@ -56,7 +56,6 @@ public class CustomerController {
         return ResponseEntity.ok(user);
     }
 
-    // correct -- only update address lane 1 and 2, family member name, telephone number
     @PatchMapping("/{customerId}")
     public ResponseEntity<User> updateCustomer(@PathVariable Long customerId, @RequestBody User updatedCustomer) {
         Customer updated = new Customer(updatedCustomer.getName(), updatedCustomer.getDateOfBirth(), updatedCustomer.getNicNumber());
@@ -77,7 +76,6 @@ public class CustomerController {
         return ResponseEntity.ok(updatedCustomer);
     }
 
-    //correct
     @GetMapping("/{customerId}")
     public ResponseEntity<User> getCustomerById(@PathVariable Long customerId) {
         Customer customer = customerService.getCustomerById(customerId);
@@ -88,7 +86,6 @@ public class CustomerController {
         return ResponseEntity.ok(user);
     }
 
-    // correct
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
         List<Customer> customers = customerService.getAllCustomers();
